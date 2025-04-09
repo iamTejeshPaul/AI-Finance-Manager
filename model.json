@@ -1,0 +1,77 @@
+{
+  "functions": {
+    "generateReport": {
+      "requestType": "https",
+      "handler": "async (req, res) => {",
+      "steps": [
+        {
+          "checkUserId": {
+            "condition": "if (!userId)",
+            "response": "return res.status(400).send('User ID is required.')"
+          }
+        },
+        {
+          "fetchUserExpenses": {
+            "databaseReference": "admin.database().ref('users/' + userId + '/expenses')",
+            "action": "const snapshot = await userRef.once('value');",
+            "data": "const expenses = snapshot.val();"
+          }
+        },
+        {
+          "filterExpenses": {
+            "description": "Filter expenses for the last 30 days",
+            "condition": "now - expenseDate <= 30 * 24 * 60 * 60 * 1000",
+            "result": "last30DaysExpenses"
+          }
+        },
+        {
+          "mlAnalysis": {
+            "description": "Run ML or AI analysis on filtered expenses",
+            "functionCall": "const behaviorAnalysis = await analyzeBehavior(last30DaysExpenses);",
+            "output": {
+              "status": "200",
+              "jsonResponse": {
+                "message": "Behavioral report generated successfully.",
+                "analysis": "behaviorAnalysis",
+                "categorizedExpenses": "categorizeExpenses(last30DaysExpenses)"
+              }
+            }
+          }
+        }
+      ],
+      "errorHandling": {
+        "catchError": {
+          "response": "res.status(500).send('Error generating report: ' + error.message)"
+        }
+      }
+    },
+    "functionsHelper": {
+      "analyzeBehavior": {
+        "description": "Simulate ML behavior analysis",
+        "returnValue": {
+          "remarks": "You tend to spend more on Entertainment. Consider reviewing your monthly budget for this category.",
+          "predictions": {
+            "categorySpending": {
+              "food": 500,
+              "entertainment": 1200,
+              "transportation": 300,
+              "clothing": 150
+            },
+            "recommendations": "Consider cutting down on entertainment expenses."
+          }
+        }
+      },
+      "categorizeExpenses": {
+        "description": "Categorize the user's expenses",
+        "categories": {
+          "food": 0,
+          "entertainment": 0,
+          "transportation": 0,
+          "clothing": 0
+        },
+        "loopLogic": "expenses.forEach(expense => { if (expense.category in categories) { categories[expense.category] += expense.amount || 0; } })",
+        "returnValue": "categories"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "users": {
+      "$userId": {
+        ".read": "auth != null && $userId === auth.uid",
+        ".write": "auth != null && $userId === auth.uid",
+        "expenses": {
+          "$expenseId": {
+            ".read": "auth != null && $userId === auth.uid",
+            ".write": "auth != null && $userId === auth.uid"
+          }
+        }
+      }
+    }
+  }
+}

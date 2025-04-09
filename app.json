@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "finance-manager",
+    "slug": "finance-manager",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "orientation": "portrait",
+    "icon": "./app/assets/icon.png",
+    "splash": {
+      "image": "./app/assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./app/assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.aifinancemanager.et"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aifinancemanager.et"
+    },
+    "web": {
+      "favicon": "./app/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6df746e5-4293-441c-92fd-1c5b95e14f73"
+      }
+    },
+    "owner": "sabbam"
+  }
+}
